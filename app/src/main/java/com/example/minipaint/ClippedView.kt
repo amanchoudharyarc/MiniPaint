@@ -37,39 +37,4 @@ class ClippedView @JvmOverloads constructor(context: Context,
     private val rowThree = rowTwo + rectInset + clipRectBottom
     private val rowFour = rowThree + rectInset + clipRectBottom
     private val textRow = rowFour + (1.5f * clipRectBottom)
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        drawBackAndUnclippedRectangle(canvas)
-        drawDifferenceClippingExample(canvas)
-        drawCircularClippingExample(canvas)
-        drawIntersectionClippingExample(canvas)
-        drawCombinedClippingExample(canvas)
-        drawRoundedRectangleClippingExample(canvas)
-        drawOutsideClippingExample(canvas)
-        drawSkewedTextExample(canvas)
-        drawTranslatedTextExample(canvas)
-        // drawQuickRejectExample(canvas)
-    }
-
-    private fun drawBackAndUnclippedRectangle(canvas: Canvas){
-    }
-    private fun drawDifferenceClippingExample(canvas: Canvas){
-    }
-    private fun drawCircularClippingExample(canvas: Canvas){
-    }
-    private fun drawIntersectionClippingExample(canvas: Canvas){
-    }
-    private fun drawCombinedClippingExample(canvas: Canvas){
-    }
-    private fun drawRoundedRectangleClippingExample(canvas: Canvas){
-    }
-    private fun drawOutsideClippingExample(canvas: Canvas){
-    }
-    private fun drawTranslatedTextExample(canvas: Canvas){
-    }
-    private fun drawSkewedTextExample(canvas: Canvas){
-    }
-    private fun drawQuickRejectExample(canvas: Canvas){
-    }
 }
