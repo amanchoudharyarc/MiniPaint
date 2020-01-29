@@ -15,8 +15,8 @@ class ClippedView @JvmOverloads constructor(context: Context,
         strokeWidth = resources.getDimension(R.dimen.strokeWidth)
         textSize = resources.getDimension(R.dimen.textSize)
     }
-//comments
-    private val path = Path()
+
+  private val path = Path()
 
     private val clipRectRight = resources.getDimension(R.dimen.clipRectRight)
     private val clipRectBottom = resources.getDimension(R.dimen.clipRectBottom)
