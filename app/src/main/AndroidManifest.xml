@@ -19,11 +19,15 @@
         <activity android:name=".FindMeActivity">
 
         </activity>
-        <activity android:name=".FanControllerActivity"></activity>
+        <activity android:name=".FanControllerActivity">
+
+        </activity>
         <activity android:name=".ClippingActivity">
 
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
     </application>
 
 </manifest>
