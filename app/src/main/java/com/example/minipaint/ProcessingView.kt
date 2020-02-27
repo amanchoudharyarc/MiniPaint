@@ -2,6 +2,7 @@ package com.example.minipaint
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.os.Handler
 import android.util.AttributeSet
 import android.util.Log
@@ -20,6 +21,11 @@ class ProcessingView @JvmOverloads constructor(
     var runnable:Runnable?=null
     var mRadius=0f
     var mCanvas:Canvas?=null
+    var path=Path()
+    var path2=Path()
+    val SIN_45=0.7071f
+    val lightBlueColor=Color.parseColor("#90caf9")
+    val darkBlueColor=Color.parseColor("#2196f3")
 
     init {
         val r = context.resources
@@ -35,7 +41,7 @@ class ProcessingView @JvmOverloads constructor(
     }
 
     private fun doff(){
-        handler2.postDelayed(runnable!!,1000)
+        handler2.postDelayed(runnable!!,150)
     }
 
     private val paint = Paint().apply {
@@ -43,14 +49,14 @@ class ProcessingView @JvmOverloads constructor(
         isAntiAlias = true
         strokeWidth = resources.getDimension(R.dimen.strokeWidth)
         textSize = resources.getDimension(R.dimen.textSize)
-        color=Color.GREEN
+        color=lightBlueColor
     }
 
     private val paint2 = Paint().apply {
         isAntiAlias = true
         strokeWidth = resources.getDimension(R.dimen.strokeWidth)
         textSize = resources.getDimension(R.dimen.textSize)
-        color=Color.RED
+        color=darkBlueColor
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -62,6 +68,16 @@ class ProcessingView @JvmOverloads constructor(
 //        mRect.set(300f,300f,700f,700f)
 //        canvas?.drawCircle(500f,500f,200f,paint)
 //        canvas?.drawArc(mRect,-90f,45f,true,paint2)
+        path.addRect(mRect.width()/2-5f,0f,mRect.width()/2+5f,mRect.height(),Path.Direction.CCW)
+        path.addRect(0f,mRect.height()/2-5f,mRect.width(),mRect.height()/2+5f,Path.Direction.CCW)
+//        path.addRect((mRadius+mRadius*SIN_45)-5f,((1-SIN_45)*mRadius),(mRadius-mRadius*SIN_45)+5f,
+//            (2*mRadius-(1-SIN_45)*mRadius),Path.Direction.CW)
+        path.addCircle(mRect.width()/2,mRect.height()/2,mRadius/2,Path.Direction.CCW)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            mCanvas?.clipPath(path, Region.Op.DIFFERENCE)
+        } else {
+            mCanvas?.clipOutPath(path)
+        }
         mCanvas?.drawCircle(mRect.width()/2,mRect.height()/2,mRadius,paint)
         mCanvas?.drawArc(mRect,startAngle,45f,true,paint2)
 
