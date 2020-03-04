@@ -16,7 +16,7 @@ class ProcessingView @JvmOverloads constructor(
     private val PADDING = 4f
     private var mPadding = 0f
     private var mBitmap: Bitmap? = null
-    var startAngle=5f
+    var startAngle=0f
     var handler2=Handler()
     var runnable:Runnable?=null
     var mRadius=0f
@@ -59,18 +59,22 @@ class ProcessingView @JvmOverloads constructor(
         color=darkBlueColor
     }
 
+    private val paintWhite = Paint().apply {
+        isAntiAlias = true
+        strokeWidth = resources.getDimension(R.dimen.strokeWidthWhite)
+        textSize = resources.getDimension(R.dimen.textSize)
+        color=Color.WHITE
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas!!.drawBitmap(
             mBitmap!!, width / 2 - mBitmap!!.width / 2.toFloat(),
             height / 2 - mBitmap!!.height / 2.toFloat(), null
         )
-//        mRect.set(300f,300f,700f,700f)
-//        canvas?.drawCircle(500f,500f,200f,paint)
-//        canvas?.drawArc(mRect,-90f,45f,true,paint2)
 
-//        path.addRect(mRect.width()/2-5f,0f,mRect.width()/2+5f,mRect.height(),Path.Direction.CCW)
-//        path.addRect(0f,mRect.height()/2-5f,mRect.width(),mRect.height()/2+5f,Path.Direction.CCW)
+        path.addRect(mRect.width()/2-5f,0f,mRect.width()/2+5f,mRect.height(),Path.Direction.CCW)
+        path.addRect(0f,mRect.height()/2-5f,mRect.width(),mRect.height()/2+5f,Path.Direction.CCW)
 //        path.addRect((mRadius+mRadius*SIN_45)-5f,((1-SIN_45)*mRadius),(mRadius-mRadius*SIN_45)+5f,
 //            (2*mRadius-(1-SIN_45)*mRadius),Path.Direction.CW)
         path.addCircle(mRect.width()/2,mRect.height()/2,mRadius/2,Path.Direction.CCW)
@@ -79,16 +83,21 @@ class ProcessingView @JvmOverloads constructor(
         } else {
             mCanvas?.clipOutPath(path)
         }
-//        mCanvas?.drawCircle(mRect.width()/2,mRect.height()/2,mRadius,paint)
-        mCanvas?.drawArc(mRect,5f,35f,true,paint)
+
+        mCanvas?.drawCircle(mRect.width()/2,mRect.height()/2,mRadius,paint)
+        /*mCanvas?.drawArc(mRect,5f,35f,true,paint)
         mCanvas?.drawArc(mRect,50f,35f,true,paint)
         mCanvas?.drawArc(mRect,95f,35f,true,paint)
         mCanvas?.drawArc(mRect,140f,35f,true,paint)
         mCanvas?.drawArc(mRect,185f,35f,true,paint)
         mCanvas?.drawArc(mRect,230f,35f,true,paint)
         mCanvas?.drawArc(mRect,275f,35f,true,paint)
-        mCanvas?.drawArc(mRect,320f,35f,true,paint)
-        mCanvas?.drawArc(mRect,startAngle,35f,true,paint2)
+        mCanvas?.drawArc(mRect,320f,35f,true,paint)*/
+        mCanvas?.drawArc(mRect,startAngle,45f,true,paint2)
+        mCanvas?.drawLine((mRadius+mRadius*SIN_45),((1-SIN_45)*mRadius)-3f,(mRadius-mRadius*SIN_45),
+            (2*mRadius-(1-SIN_45)*mRadius)+3f,paintWhite)
+        mCanvas?.drawLine((mRadius+mRadius*SIN_45),2*mRadius-((1-SIN_45)*mRadius)+3f,(mRadius-mRadius*SIN_45),
+            (1-SIN_45)*mRadius-3f,paintWhite)
 
     }
 
