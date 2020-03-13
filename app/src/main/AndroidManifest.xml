@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.minipaint">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,20 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccessFileActivity">
+        <activity android:name=".PatternActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProcessingActivity">
+        <activity android:name=".AccessFileActivity">
 
         </activity>
-        <activity android:name=".FindMeActivity"></activity>
-        <activity android:name=".FanControllerActivity"></activity>
-        <activity android:name=".ClippingActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ProcessingActivity"></activity>
+        <activity android:name=".FindMeActivity" />
+        <activity android:name=".FanControllerActivity" />
+        <activity android:name=".ClippingActivity" />
+        <activity android:name=".MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -35,7 +36,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>
