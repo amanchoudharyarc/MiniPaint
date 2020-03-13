@@ -23,6 +23,16 @@ class PatternView @JvmOverloads constructor(
 
     private var path = Path()
 
+    private var one=true
+    private var two=true
+    private var three=true
+    private var four=true
+    private var five=true
+    private var six=true
+    private var seven=true
+    private var eight=true
+    private var nine=true
+
     private val paint = Paint().apply {
         // Smooth out edges of what is drawn without affecting shape.
         isAntiAlias = true
@@ -71,21 +81,140 @@ class PatternView @JvmOverloads constructor(
 
         when(event.action){
             MotionEvent.ACTION_DOWN -> {
-                path.reset()
-                path.moveTo(mRect.width()/6, mRect.height()/6)
-                currentX = motionTouchEventX
-                currentY = motionTouchEventY
+//                path.reset()
+//                path.moveTo(mRect.width()/6, mRect.height()/6)
+//                currentX = motionTouchEventX
+//                currentY = motionTouchEventY
             }
 
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(motionTouchEventX,motionTouchEventY)
-                mCanvas?.drawPath(path, paint)
-                invalidate()
+//                path.lineTo(motionTouchEventX,motionTouchEventY)
+//                mCanvas?.drawPath(path, paint)
+                if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
+                    && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
+                    && one){
+                    one=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/6
+                        currentY = mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()/6
+                    currentY = mRect.height()/6
+                }
+                else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
+                    && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
+                    && two){
+                    two=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/2
+                        currentY = mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()/2
+                    currentY = mRect.height()/6
+                }
+                else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
+                    && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
+                    && three){
+                    three=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()-mRect.width()/6
+                        currentY = mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()-mRect.width()/6
+                    currentY = mRect.height()/6
+                }
+                else if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
+                    && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
+                    && four){
+                    four=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/6
+                        currentY = mRect.height()/2
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/2,paint)
+                    invalidate()
+                    currentX = mRect.width()/6
+                    currentY = mRect.height()/2
+                }
+                else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
+                    && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
+                    && five){
+                    five=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/2
+                        currentY = mRect.height()/2
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                    invalidate()
+                    currentX = mRect.width()/2
+                    currentY = mRect.height()/2
+                }
+                else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
+                    && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
+                    && six){
+                    six=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()-mRect.width()/6
+                        currentY = mRect.height()/2
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/2,paint)
+                    invalidate()
+                    currentX = mRect.width()-mRect.width()/6
+                    currentY = mRect.height()/2
+                }
+                else if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
+                    && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
+                    && seven){
+                    seven=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/6
+                        currentY = mRect.height()-mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()-mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()/6
+                    currentY = mRect.height()-mRect.height()/6
+                }
+                else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
+                    && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
+                    && eight){
+                    eight=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()/2
+                        currentY = mRect.height()-mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()-mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()/2
+                    currentY = mRect.height()-mRect.height()/6
+                }
+                else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
+                    && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
+                    && nine){
+                    nine=false
+                    if(currentX==0f || currentY==0f){
+                        currentX = mRect.width()-mRect.width()/6
+                        currentY = mRect.height()-mRect.height()/6
+                    }
+                    mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()-mRect.height()/6,paint)
+                    invalidate()
+                    currentX = mRect.width()-mRect.width()/6
+                    currentY = mRect.height()-mRect.height()/6
+                }
+
 
             }
 
             MotionEvent.ACTION_UP -> {
-                path.reset()
+//                path.reset()
+//                mCanvas?.drawLine(currentX,currentY,motionTouchEventX,motionTouchEventY,paint)
+//                invalidate()
             }
         }
         return true
