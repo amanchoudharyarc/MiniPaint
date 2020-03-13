@@ -3,8 +3,10 @@ package com.example.minipaint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import java.lang.StringBuilder
 
 class PatternView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -32,6 +34,9 @@ class PatternView @JvmOverloads constructor(
     private var seven=true
     private var eight=true
     private var nine=true
+
+    private var last=0
+    private var output=StringBuilder()
 
     private val paint = Paint().apply {
         // Smooth out edges of what is drawn without affecting shape.
@@ -90,123 +95,338 @@ class PatternView @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
 //                path.lineTo(motionTouchEventX,motionTouchEventY)
 //                mCanvas?.drawPath(path, paint)
+
+                //start one
                 if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
                     && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
                     && one){
-                    one=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/6
                         currentY = mRect.height()/6
                     }
+                    if(last==3){
+                        if(two){
+                            two=false
+                            output.append(2)
+                            Log.d("asdert",""+two)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/6,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/6
+                        }
+                    }else if(last==7){
+                        if(four){
+                            four=false
+                            output.append(4)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/6
+                            currentY = mRect.height()/2
+                        }
+                    }else if (last==9){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    one=false
+                    output.append(1)
+                    last=1
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()/6
                     currentY = mRect.height()/6
                 }
+                //End One
+
+
+
+                //start two
                 else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
                     && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
                     && two){
-                    two=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/2
                         currentY = mRect.height()/6
                     }
+                    if (last==8){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    two=false
+                    output.append(2)
+                    last=2
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()/2
                     currentY = mRect.height()/6
                 }
+                //End two
+
+
+
+                //start three
                 else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
                     && (mRect.height()/12)*1<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*3
                     && three){
-                    three=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()-mRect.width()/6
                         currentY = mRect.height()/6
                     }
+                    if(last==1){
+                        if(two){
+                            two=false
+                            output.append(2)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/6,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/6
+                        }
+                    }else if(last==7){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+
+                    }else if(last==9){
+                        if(six){
+                            six=false
+                            output.append(6)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()-mRect.width()/6
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    three=false
+                    output.append(3)
+                    last=3
                     mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()-mRect.width()/6
                     currentY = mRect.height()/6
                 }
+                //End three
+
+
+
+                //start four
                 else if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
                     && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
                     && four){
-                    four=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/6
                         currentY = mRect.height()/2
                     }
+                    if(last==6){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    four=false
+                    output.append(4)
+                    last=4
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/2,paint)
                     invalidate()
                     currentX = mRect.width()/6
                     currentY = mRect.height()/2
                 }
+                //End four
+
+
+
+                //start five
                 else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
                     && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
                     && five){
-                    five=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/2
                         currentY = mRect.height()/2
                     }
+                    five=false
+                    output.append(5)
+                    last=5
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
                     invalidate()
                     currentX = mRect.width()/2
                     currentY = mRect.height()/2
                 }
+                //End five
+
+
+
+                //start six
                 else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
                     && (mRect.height()/12)*5<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*7
                     && six){
-                    six=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()-mRect.width()/6
                         currentY = mRect.height()/2
                     }
+                    if(last==4){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    six=false
+                    output.append(6)
+                    last=6
                     mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/2,paint)
                     invalidate()
                     currentX = mRect.width()-mRect.width()/6
                     currentY = mRect.height()/2
                 }
+                //End six
+
+
+
+                //start seven
                 else if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
                     && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
                     && seven){
-                    seven=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/6
                         currentY = mRect.height()-mRect.height()/6
                     }
+                    if(last==1){
+                        if(four){
+                            four=false
+                            output.append(4)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/6
+                            currentY = mRect.height()/2
+                        }
+                    }else if(last==3){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }else if(last==9){
+                        if(eight){
+                            eight=false
+                            output.append(8)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()-mRect.height()/6,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()-mRect.height()/6
+                        }
+                    }
+                    seven=false
+                    output.append(7)
+                    last=7
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/6,mRect.height()-mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()/6
                     currentY = mRect.height()-mRect.height()/6
                 }
+                //End seven
+
+
+
+                //start eight
                 else if ((mRect.width()/12)*5<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*7
                     && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
                     && eight){
-                    eight=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()/2
                         currentY = mRect.height()-mRect.height()/6
                     }
+                    if(last==2){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }
+                    eight=false
+                    output.append(8)
+                    last=8
                     mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()-mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()/2
                     currentY = mRect.height()-mRect.height()/6
                 }
+                //End eight
+
+
+
+                //start nine
                 else if ((mRect.width()/12)*9<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*11
                     && (mRect.height()/12)*9<motionTouchEventY&&motionTouchEventY<(mRect.height()/12)*11
                     && nine){
-                    nine=false
                     if(currentX==0f || currentY==0f){
                         currentX = mRect.width()-mRect.width()/6
                         currentY = mRect.height()-mRect.height()/6
                     }
+                    if(last==1){
+                        if(five){
+                            five=false
+                            output.append(5)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()/2
+                        }
+                    }else if(last==3){
+                        if(six){
+                            six=false
+                            output.append(6)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()/2,paint)
+                            invalidate()
+                            currentX = mRect.width()-mRect.width()/6
+                            currentY = mRect.height()/2
+                        }
+                    }else if(last==7){
+                        if(eight){
+                            eight=false
+                            output.append(8)
+                            mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()-mRect.height()/6,paint)
+                            invalidate()
+                            currentX = mRect.width()/2
+                            currentY = mRect.height()-mRect.height()/6
+                        }
+                    }
+                    nine=false
+                    output.append(9)
+                    last=9
                     mCanvas?.drawLine(currentX,currentY,mRect.width()-mRect.width()/6,mRect.height()-mRect.height()/6,paint)
                     invalidate()
                     currentX = mRect.width()-mRect.width()/6
                     currentY = mRect.height()-mRect.height()/6
                 }
+                //End nine
 
 
             }
@@ -215,6 +435,7 @@ class PatternView @JvmOverloads constructor(
 //                path.reset()
 //                mCanvas?.drawLine(currentX,currentY,motionTouchEventX,motionTouchEventY,paint)
 //                invalidate()
+                Log.d("asdert",""+output)
             }
         }
         return true
