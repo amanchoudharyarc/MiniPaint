@@ -22,8 +22,10 @@ class PatternView @JvmOverloads constructor(
     private var motionTouchEventY = 0f
     private var currentX = 0f
     private var currentY = 0f
+    private var previousX = 0f
+    private var previousY = 0f
 
-    private var path = Path()
+    private var mPath = Path()
 
     private var one=true
     private var two=true
@@ -43,7 +45,23 @@ class PatternView @JvmOverloads constructor(
         isAntiAlias = true
         strokeWidth = resources.getDimension(R.dimen.strokeWidth)
         textSize = resources.getDimension(R.dimen.textSize)
+        style=Paint.Style.FILL_AND_STROKE
+        strokeJoin=Paint.Join.ROUND
+        strokeCap=Paint.Cap.ROUND
         color=Color.BLACK
+//        isDither=true
+    }
+
+    private val paintWhite = Paint().apply {
+        // Smooth out edges of what is drawn without affecting shape.
+        isAntiAlias = true
+        strokeWidth = resources.getDimension(R.dimen.strokeWidth)
+        textSize = resources.getDimension(R.dimen.textSize)
+        style=Paint.Style.FILL_AND_STROKE
+        strokeJoin=Paint.Join.ROUND
+        strokeCap=Paint.Cap.ROUND
+        color=Color.BLACK
+//        isDither=true
     }
 
 
@@ -95,6 +113,22 @@ class PatternView @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
 //                path.lineTo(motionTouchEventX,motionTouchEventY)
 //                mCanvas?.drawPath(path, paint)
+//                mPath.rewind()
+                if(last==1){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        mPath.reset()
+                        invalidate()
+
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/6,mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+
+                }
 
                 //start one
                 if ((mRect.width()/12)*1<motionTouchEventX&&motionTouchEventX<(mRect.width()/12)*3
@@ -108,7 +142,6 @@ class PatternView @JvmOverloads constructor(
                         if(two){
                             two=false
                             output.append(2)
-                            Log.d("asdert",""+two)
                             mCanvas?.drawLine(currentX,currentY,mRect.width()/2,mRect.height()/6,paint)
                             invalidate()
                             currentX = mRect.width()/2
