@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import java.lang.StringBuilder
 
 class PatternView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -39,6 +38,8 @@ class PatternView @JvmOverloads constructor(
 
     private var last=0
     private var output=StringBuilder()
+    private var realoutput=String()
+    private var drawLinePoints = FloatArray(4)
 
     private val paint = Paint().apply {
         // Smooth out edges of what is drawn without affecting shape.
@@ -55,12 +56,13 @@ class PatternView @JvmOverloads constructor(
     private val paintWhite = Paint().apply {
         // Smooth out edges of what is drawn without affecting shape.
         isAntiAlias = true
-        strokeWidth = resources.getDimension(R.dimen.strokeWidth)
+        strokeWidth = resources.getDimension(R.dimen.strokeWidthWhite)
         textSize = resources.getDimension(R.dimen.textSize)
         style=Paint.Style.FILL_AND_STROKE
         strokeJoin=Paint.Join.ROUND
         strokeCap=Paint.Cap.ROUND
-        color=Color.BLACK
+        color=Color.WHITE
+        setXfermode(PorterDuffXfermode(PorterDuff.Mode.DST_OUT))
 //        isDither=true
     }
 
@@ -81,6 +83,70 @@ class PatternView @JvmOverloads constructor(
         mCanvas?.drawCircle(mRect.width()/6,mRect.height()-mRect.height()/6,10f,paint)
         mCanvas?.drawCircle(mRect.width()/2,mRect.height()-mRect.height()/6,10f,paint)
         mCanvas?.drawCircle(mRect.width()-mRect.width()/6,mRect.height()-mRect.height()/6,10f,paint)
+
+        if(output.length>=2){
+        for (i in 0..(output.length-2)){
+            if(output[i] =='1'){
+                drawLinePoints[0]=mRect.width()/6
+                drawLinePoints[1]=mRect.height()/6
+            }else if(output[i] =='2'){
+                drawLinePoints[0]=mRect.width()/2
+                drawLinePoints[1]=mRect.height()/6
+            }else if(output[i] =='3'){
+                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                drawLinePoints[1]=mRect.height()/6
+            }else if(output[i] =='4'){
+                drawLinePoints[0]=mRect.width()/6
+                drawLinePoints[1]=mRect.height()/2
+            }else if(output[i] =='5'){
+                drawLinePoints[0]=mRect.width()/2
+                drawLinePoints[1]=mRect.height()/2
+            }else if(output[i] =='6'){
+                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                drawLinePoints[1]=mRect.height()/2
+            }else if(output[i] =='7'){
+                drawLinePoints[0]=mRect.width()/6
+                drawLinePoints[1]=mRect.height()-mRect.height()/6
+            }else if(output[i] =='8'){
+                drawLinePoints[0]=mRect.width()/2
+                drawLinePoints[1]=mRect.height()-mRect.height()/6
+            }else if(output[i] =='9'){
+                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                drawLinePoints[1]=mRect.height()-mRect.height()/6
+            }
+
+            if(output[i+1] =='1'){
+                drawLinePoints[2]=mRect.width()/6
+                drawLinePoints[3]=mRect.height()/6
+            }else if(output[i+1] =='2'){
+                drawLinePoints[2]=mRect.width()/2
+                drawLinePoints[3]=mRect.height()/6
+            }else if(output[i+1] =='3'){
+                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                drawLinePoints[3]=mRect.height()/6
+            }else if(output[i+1] =='4'){
+                drawLinePoints[2]=mRect.width()/6
+                drawLinePoints[3]=mRect.height()/2
+            }else if(output[i+1] =='5'){
+                drawLinePoints[2]=mRect.width()/2
+                drawLinePoints[3]=mRect.height()/2
+            }else if(output[i+1] =='6'){
+                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                drawLinePoints[3]=mRect.height()/2
+            }else if(output[i+1] =='7'){
+                drawLinePoints[2]=mRect.width()/6
+                drawLinePoints[3]=mRect.height()-mRect.height()/6
+            }else if(output[i+1] =='8'){
+                drawLinePoints[2]=mRect.width()/2
+                drawLinePoints[3]=mRect.height()-mRect.height()/6
+            }else if(output[i+1] =='9'){
+                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                drawLinePoints[3]=mRect.height()-mRect.height()/6
+            }
+
+            mCanvas?.drawLine(drawLinePoints[0],drawLinePoints[1],drawLinePoints[2],drawLinePoints[3],paint)
+        }
+        }
 
     }
 
@@ -114,12 +180,10 @@ class PatternView @JvmOverloads constructor(
 //                path.lineTo(motionTouchEventX,motionTouchEventY)
 //                mCanvas?.drawPath(path, paint)
 //                mPath.rewind()
-                if(last==1){
+                if(last==1 && currentX!=0f){
                     if(previousX!=0f){
                         mCanvas?.drawPath(mPath,paintWhite)
-                        mPath.reset()
                         invalidate()
-
                     }
                     mPath.reset()
                     mPath.moveTo(mRect.width()/6,mRect.height()/6)
@@ -127,7 +191,102 @@ class PatternView @JvmOverloads constructor(
                     mCanvas?.drawPath(mPath,paint)
                     previousX=1f
                     invalidate()
-
+                }
+                else if(last==2 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/2,mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==3 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==4 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/6,mRect.height()/2)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==5 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/2,mRect.height()/2)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==6 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()/2)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==7 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/6,mRect.height()-mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==8 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()/2,mRect.height()-mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
+                }
+                else if(last==9 && currentX!=0f){
+                    if(previousX!=0f){
+                        mCanvas?.drawPath(mPath,paintWhite)
+                        invalidate()
+                    }
+                    mPath.reset()
+                    mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()-mRect.height()/6)
+                    mPath.lineTo(motionTouchEventX,motionTouchEventY)
+                    mCanvas?.drawPath(mPath,paint)
+                    previousX=1f
+                    invalidate()
                 }
 
                 //start one
@@ -468,7 +627,90 @@ class PatternView @JvmOverloads constructor(
 //                path.reset()
 //                mCanvas?.drawLine(currentX,currentY,motionTouchEventX,motionTouchEventY,paint)
 //                invalidate()
-                Log.d("asdert",""+output)
+                realoutput=output.toString()
+
+                if(output.length>=2){
+                    for (i in 0..(output.length-2)){
+                        if(output[i] =='1'){
+                            drawLinePoints[0]=mRect.width()/6
+                            drawLinePoints[1]=mRect.height()/6
+                        }else if(output[i] =='2'){
+                            drawLinePoints[0]=mRect.width()/2
+                            drawLinePoints[1]=mRect.height()/6
+                        }else if(output[i] =='3'){
+                            drawLinePoints[0]=mRect.width()-mRect.width()/6
+                            drawLinePoints[1]=mRect.height()/6
+                        }else if(output[i] =='4'){
+                            drawLinePoints[0]=mRect.width()/6
+                            drawLinePoints[1]=mRect.height()/2
+                        }else if(output[i] =='5'){
+                            drawLinePoints[0]=mRect.width()/2
+                            drawLinePoints[1]=mRect.height()/2
+                        }else if(output[i] =='6'){
+                            drawLinePoints[0]=mRect.width()-mRect.width()/6
+                            drawLinePoints[1]=mRect.height()/2
+                        }else if(output[i] =='7'){
+                            drawLinePoints[0]=mRect.width()/6
+                            drawLinePoints[1]=mRect.height()-mRect.height()/6
+                        }else if(output[i] =='8'){
+                            drawLinePoints[0]=mRect.width()/2
+                            drawLinePoints[1]=mRect.height()-mRect.height()/6
+                        }else if(output[i] =='9'){
+                            drawLinePoints[0]=mRect.width()-mRect.width()/6
+                            drawLinePoints[1]=mRect.height()-mRect.height()/6
+                        }
+
+                        if(output[i+1] =='1'){
+                            drawLinePoints[2]=mRect.width()/6
+                            drawLinePoints[3]=mRect.height()/6
+                        }else if(output[i+1] =='2'){
+                            drawLinePoints[2]=mRect.width()/2
+                            drawLinePoints[3]=mRect.height()/6
+                        }else if(output[i+1] =='3'){
+                            drawLinePoints[2]=mRect.width()-mRect.width()/6
+                            drawLinePoints[3]=mRect.height()/6
+                        }else if(output[i+1] =='4'){
+                            drawLinePoints[2]=mRect.width()/6
+                            drawLinePoints[3]=mRect.height()/2
+                        }else if(output[i+1] =='5'){
+                            drawLinePoints[2]=mRect.width()/2
+                            drawLinePoints[3]=mRect.height()/2
+                        }else if(output[i+1] =='6'){
+                            drawLinePoints[2]=mRect.width()-mRect.width()/6
+                            drawLinePoints[3]=mRect.height()/2
+                        }else if(output[i+1] =='7'){
+                            drawLinePoints[2]=mRect.width()/6
+                            drawLinePoints[3]=mRect.height()-mRect.height()/6
+                        }else if(output[i+1] =='8'){
+                            drawLinePoints[2]=mRect.width()/2
+                            drawLinePoints[3]=mRect.height()-mRect.height()/6
+                        }else if(output[i+1] =='9'){
+                            drawLinePoints[2]=mRect.width()-mRect.width()/6
+                            drawLinePoints[3]=mRect.height()-mRect.height()/6
+                        }
+
+                        mCanvas?.drawLine(drawLinePoints[0],drawLinePoints[1],drawLinePoints[2],drawLinePoints[3],paintWhite)
+                    }
+                }
+
+
+
+                output.clear()
+                Log.d("asdert",""+realoutput)
+
+                mCanvas?.drawPath(mPath,paintWhite)
+
+                currentX=0f
+                currentY=0f
+                one=true
+                two=true
+                three=true
+                four=true
+                five=true
+                six=true
+                seven=true
+                eight=true
+                nine=true
             }
         }
         return true
