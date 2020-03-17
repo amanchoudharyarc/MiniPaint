@@ -21,8 +21,6 @@ class PatternView @JvmOverloads constructor(
     private var motionTouchEventY = 0f
     private var currentX = 0f
     private var currentY = 0f
-    private var previousX = 0f
-    private var previousY = 0f
 
     private var mPath = Path()
 
@@ -174,111 +172,84 @@ class PatternView @JvmOverloads constructor(
 
             MotionEvent.ACTION_MOVE -> {
                 if(last==1 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/6,mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==2 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/2,mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==3 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==4 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/6,mRect.height()/2)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==5 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/2,mRect.height()/2)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==6 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()/2)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==7 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/6,mRect.height()-mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==8 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()/2,mRect.height()-mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
                 else if(last==9 && currentX!=0f){
-                    if(previousX!=0f){
-                        mCanvas?.drawPath(mPath,paintWhite)
-                        invalidate()
-                    }
+                    mCanvas?.drawPath(mPath,paintWhite)
+                    invalidate()
                     mPath.reset()
                     mPath.moveTo(mRect.width()-mRect.width()/6,mRect.height()-mRect.height()/6)
                     mPath.lineTo(motionTouchEventX,motionTouchEventY)
                     mCanvas?.drawPath(mPath,paint)
-                    previousX=1f
                     invalidate()
                 }
 
