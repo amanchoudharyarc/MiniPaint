@@ -11,11 +11,11 @@ class PatternView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    val mRect : RectF = RectF()
-    private val PADDING = 4f
+    private val mRect : RectF = RectF()
+//    private val PADDING = 4f
     private var mPadding = 0f
     private var mBitmap: Bitmap? = null
-    var mCanvas:Canvas?=null
+    private var mCanvas:Canvas?=null
 
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
@@ -60,7 +60,7 @@ class PatternView @JvmOverloads constructor(
         strokeJoin=Paint.Join.ROUND
         strokeCap=Paint.Cap.ROUND
         color=Color.WHITE
-        setXfermode(PorterDuffXfermode(PorterDuff.Mode.DST_OUT))
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
 //        isDither=true
     }
 
@@ -84,62 +84,82 @@ class PatternView @JvmOverloads constructor(
 
         if(output.length>=2){
         for (i in 0..(output.length-2)){
-            if(output[i] =='1'){
-                drawLinePoints[0]=mRect.width()/6
-                drawLinePoints[1]=mRect.height()/6
-            }else if(output[i] =='2'){
-                drawLinePoints[0]=mRect.width()/2
-                drawLinePoints[1]=mRect.height()/6
-            }else if(output[i] =='3'){
-                drawLinePoints[0]=mRect.width()-mRect.width()/6
-                drawLinePoints[1]=mRect.height()/6
-            }else if(output[i] =='4'){
-                drawLinePoints[0]=mRect.width()/6
-                drawLinePoints[1]=mRect.height()/2
-            }else if(output[i] =='5'){
-                drawLinePoints[0]=mRect.width()/2
-                drawLinePoints[1]=mRect.height()/2
-            }else if(output[i] =='6'){
-                drawLinePoints[0]=mRect.width()-mRect.width()/6
-                drawLinePoints[1]=mRect.height()/2
-            }else if(output[i] =='7'){
-                drawLinePoints[0]=mRect.width()/6
-                drawLinePoints[1]=mRect.height()-mRect.height()/6
-            }else if(output[i] =='8'){
-                drawLinePoints[0]=mRect.width()/2
-                drawLinePoints[1]=mRect.height()-mRect.height()/6
-            }else if(output[i] =='9'){
-                drawLinePoints[0]=mRect.width()-mRect.width()/6
-                drawLinePoints[1]=mRect.height()-mRect.height()/6
+            when {
+                output[i] =='1' -> {
+                    drawLinePoints[0]=mRect.width()/6
+                    drawLinePoints[1]=mRect.height()/6
+                }
+                output[i] =='2' -> {
+                    drawLinePoints[0]=mRect.width()/2
+                    drawLinePoints[1]=mRect.height()/6
+                }
+                output[i] =='3' -> {
+                    drawLinePoints[0]=mRect.width()-mRect.width()/6
+                    drawLinePoints[1]=mRect.height()/6
+                }
+                output[i] =='4' -> {
+                    drawLinePoints[0]=mRect.width()/6
+                    drawLinePoints[1]=mRect.height()/2
+                }
+                output[i] =='5' -> {
+                    drawLinePoints[0]=mRect.width()/2
+                    drawLinePoints[1]=mRect.height()/2
+                }
+                output[i] =='6' -> {
+                    drawLinePoints[0]=mRect.width()-mRect.width()/6
+                    drawLinePoints[1]=mRect.height()/2
+                }
+                output[i] =='7' -> {
+                    drawLinePoints[0]=mRect.width()/6
+                    drawLinePoints[1]=mRect.height()-mRect.height()/6
+                }
+                output[i] =='8' -> {
+                    drawLinePoints[0]=mRect.width()/2
+                    drawLinePoints[1]=mRect.height()-mRect.height()/6
+                }
+                output[i] =='9' -> {
+                    drawLinePoints[0]=mRect.width()-mRect.width()/6
+                    drawLinePoints[1]=mRect.height()-mRect.height()/6
+                }
             }
 
-            if(output[i+1] =='1'){
-                drawLinePoints[2]=mRect.width()/6
-                drawLinePoints[3]=mRect.height()/6
-            }else if(output[i+1] =='2'){
-                drawLinePoints[2]=mRect.width()/2
-                drawLinePoints[3]=mRect.height()/6
-            }else if(output[i+1] =='3'){
-                drawLinePoints[2]=mRect.width()-mRect.width()/6
-                drawLinePoints[3]=mRect.height()/6
-            }else if(output[i+1] =='4'){
-                drawLinePoints[2]=mRect.width()/6
-                drawLinePoints[3]=mRect.height()/2
-            }else if(output[i+1] =='5'){
-                drawLinePoints[2]=mRect.width()/2
-                drawLinePoints[3]=mRect.height()/2
-            }else if(output[i+1] =='6'){
-                drawLinePoints[2]=mRect.width()-mRect.width()/6
-                drawLinePoints[3]=mRect.height()/2
-            }else if(output[i+1] =='7'){
-                drawLinePoints[2]=mRect.width()/6
-                drawLinePoints[3]=mRect.height()-mRect.height()/6
-            }else if(output[i+1] =='8'){
-                drawLinePoints[2]=mRect.width()/2
-                drawLinePoints[3]=mRect.height()-mRect.height()/6
-            }else if(output[i+1] =='9'){
-                drawLinePoints[2]=mRect.width()-mRect.width()/6
-                drawLinePoints[3]=mRect.height()-mRect.height()/6
+            when {
+                output[i+1] =='1' -> {
+                    drawLinePoints[2]=mRect.width()/6
+                    drawLinePoints[3]=mRect.height()/6
+                }
+                output[i+1] =='2' -> {
+                    drawLinePoints[2]=mRect.width()/2
+                    drawLinePoints[3]=mRect.height()/6
+                }
+                output[i+1] =='3' -> {
+                    drawLinePoints[2]=mRect.width()-mRect.width()/6
+                    drawLinePoints[3]=mRect.height()/6
+                }
+                output[i+1] =='4' -> {
+                    drawLinePoints[2]=mRect.width()/6
+                    drawLinePoints[3]=mRect.height()/2
+                }
+                output[i+1] =='5' -> {
+                    drawLinePoints[2]=mRect.width()/2
+                    drawLinePoints[3]=mRect.height()/2
+                }
+                output[i+1] =='6' -> {
+                    drawLinePoints[2]=mRect.width()-mRect.width()/6
+                    drawLinePoints[3]=mRect.height()/2
+                }
+                output[i+1] =='7' -> {
+                    drawLinePoints[2]=mRect.width()/6
+                    drawLinePoints[3]=mRect.height()-mRect.height()/6
+                }
+                output[i+1] =='8' -> {
+                    drawLinePoints[2]=mRect.width()/2
+                    drawLinePoints[3]=mRect.height()-mRect.height()/6
+                }
+                output[i+1] =='9' -> {
+                    drawLinePoints[2]=mRect.width()-mRect.width()/6
+                    drawLinePoints[3]=mRect.height()-mRect.height()/6
+                }
             }
 
             mCanvas?.drawLine(drawLinePoints[0],drawLinePoints[1],drawLinePoints[2],drawLinePoints[3],paint)
@@ -597,62 +617,82 @@ class PatternView @JvmOverloads constructor(
 
                 if(output.length>=2){
                     for (i in 0..(output.length-2)){
-                        if(output[i] =='1'){
-                            drawLinePoints[0]=mRect.width()/6
-                            drawLinePoints[1]=mRect.height()/6
-                        }else if(output[i] =='2'){
-                            drawLinePoints[0]=mRect.width()/2
-                            drawLinePoints[1]=mRect.height()/6
-                        }else if(output[i] =='3'){
-                            drawLinePoints[0]=mRect.width()-mRect.width()/6
-                            drawLinePoints[1]=mRect.height()/6
-                        }else if(output[i] =='4'){
-                            drawLinePoints[0]=mRect.width()/6
-                            drawLinePoints[1]=mRect.height()/2
-                        }else if(output[i] =='5'){
-                            drawLinePoints[0]=mRect.width()/2
-                            drawLinePoints[1]=mRect.height()/2
-                        }else if(output[i] =='6'){
-                            drawLinePoints[0]=mRect.width()-mRect.width()/6
-                            drawLinePoints[1]=mRect.height()/2
-                        }else if(output[i] =='7'){
-                            drawLinePoints[0]=mRect.width()/6
-                            drawLinePoints[1]=mRect.height()-mRect.height()/6
-                        }else if(output[i] =='8'){
-                            drawLinePoints[0]=mRect.width()/2
-                            drawLinePoints[1]=mRect.height()-mRect.height()/6
-                        }else if(output[i] =='9'){
-                            drawLinePoints[0]=mRect.width()-mRect.width()/6
-                            drawLinePoints[1]=mRect.height()-mRect.height()/6
+                        when {
+                            output[i] =='1' -> {
+                                drawLinePoints[0]=mRect.width()/6
+                                drawLinePoints[1]=mRect.height()/6
+                            }
+                            output[i] =='2' -> {
+                                drawLinePoints[0]=mRect.width()/2
+                                drawLinePoints[1]=mRect.height()/6
+                            }
+                            output[i] =='3' -> {
+                                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                                drawLinePoints[1]=mRect.height()/6
+                            }
+                            output[i] =='4' -> {
+                                drawLinePoints[0]=mRect.width()/6
+                                drawLinePoints[1]=mRect.height()/2
+                            }
+                            output[i] =='5' -> {
+                                drawLinePoints[0]=mRect.width()/2
+                                drawLinePoints[1]=mRect.height()/2
+                            }
+                            output[i] =='6' -> {
+                                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                                drawLinePoints[1]=mRect.height()/2
+                            }
+                            output[i] =='7' -> {
+                                drawLinePoints[0]=mRect.width()/6
+                                drawLinePoints[1]=mRect.height()-mRect.height()/6
+                            }
+                            output[i] =='8' -> {
+                                drawLinePoints[0]=mRect.width()/2
+                                drawLinePoints[1]=mRect.height()-mRect.height()/6
+                            }
+                            output[i] =='9' -> {
+                                drawLinePoints[0]=mRect.width()-mRect.width()/6
+                                drawLinePoints[1]=mRect.height()-mRect.height()/6
+                            }
                         }
 
-                        if(output[i+1] =='1'){
-                            drawLinePoints[2]=mRect.width()/6
-                            drawLinePoints[3]=mRect.height()/6
-                        }else if(output[i+1] =='2'){
-                            drawLinePoints[2]=mRect.width()/2
-                            drawLinePoints[3]=mRect.height()/6
-                        }else if(output[i+1] =='3'){
-                            drawLinePoints[2]=mRect.width()-mRect.width()/6
-                            drawLinePoints[3]=mRect.height()/6
-                        }else if(output[i+1] =='4'){
-                            drawLinePoints[2]=mRect.width()/6
-                            drawLinePoints[3]=mRect.height()/2
-                        }else if(output[i+1] =='5'){
-                            drawLinePoints[2]=mRect.width()/2
-                            drawLinePoints[3]=mRect.height()/2
-                        }else if(output[i+1] =='6'){
-                            drawLinePoints[2]=mRect.width()-mRect.width()/6
-                            drawLinePoints[3]=mRect.height()/2
-                        }else if(output[i+1] =='7'){
-                            drawLinePoints[2]=mRect.width()/6
-                            drawLinePoints[3]=mRect.height()-mRect.height()/6
-                        }else if(output[i+1] =='8'){
-                            drawLinePoints[2]=mRect.width()/2
-                            drawLinePoints[3]=mRect.height()-mRect.height()/6
-                        }else if(output[i+1] =='9'){
-                            drawLinePoints[2]=mRect.width()-mRect.width()/6
-                            drawLinePoints[3]=mRect.height()-mRect.height()/6
+                        when {
+                            output[i+1] =='1' -> {
+                                drawLinePoints[2]=mRect.width()/6
+                                drawLinePoints[3]=mRect.height()/6
+                            }
+                            output[i+1] =='2' -> {
+                                drawLinePoints[2]=mRect.width()/2
+                                drawLinePoints[3]=mRect.height()/6
+                            }
+                            output[i+1] =='3' -> {
+                                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                                drawLinePoints[3]=mRect.height()/6
+                            }
+                            output[i+1] =='4' -> {
+                                drawLinePoints[2]=mRect.width()/6
+                                drawLinePoints[3]=mRect.height()/2
+                            }
+                            output[i+1] =='5' -> {
+                                drawLinePoints[2]=mRect.width()/2
+                                drawLinePoints[3]=mRect.height()/2
+                            }
+                            output[i+1] =='6' -> {
+                                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                                drawLinePoints[3]=mRect.height()/2
+                            }
+                            output[i+1] =='7' -> {
+                                drawLinePoints[2]=mRect.width()/6
+                                drawLinePoints[3]=mRect.height()-mRect.height()/6
+                            }
+                            output[i+1] =='8' -> {
+                                drawLinePoints[2]=mRect.width()/2
+                                drawLinePoints[3]=mRect.height()-mRect.height()/6
+                            }
+                            output[i+1] =='9' -> {
+                                drawLinePoints[2]=mRect.width()-mRect.width()/6
+                                drawLinePoints[3]=mRect.height()-mRect.height()/6
+                            }
                         }
 
                         mCanvas?.drawLine(drawLinePoints[0],drawLinePoints[1],drawLinePoints[2],drawLinePoints[3],paintWhite)
