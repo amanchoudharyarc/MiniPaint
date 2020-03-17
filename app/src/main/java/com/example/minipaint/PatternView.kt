@@ -170,16 +170,9 @@ class PatternView @JvmOverloads constructor(
 
         when(event.action){
             MotionEvent.ACTION_DOWN -> {
-//                path.reset()
-//                path.moveTo(mRect.width()/6, mRect.height()/6)
-//                currentX = motionTouchEventX
-//                currentY = motionTouchEventY
             }
 
             MotionEvent.ACTION_MOVE -> {
-//                path.lineTo(motionTouchEventX,motionTouchEventY)
-//                mCanvas?.drawPath(path, paint)
-//                mPath.rewind()
                 if(last==1 && currentX!=0f){
                     if(previousX!=0f){
                         mCanvas?.drawPath(mPath,paintWhite)
@@ -627,6 +620,8 @@ class PatternView @JvmOverloads constructor(
 //                path.reset()
 //                mCanvas?.drawLine(currentX,currentY,motionTouchEventX,motionTouchEventY,paint)
 //                invalidate()
+                mCanvas?.drawPath(mPath,paintWhite)
+                invalidate()
                 realoutput=output.toString()
 
                 if(output.length>=2){
@@ -690,6 +685,7 @@ class PatternView @JvmOverloads constructor(
                         }
 
                         mCanvas?.drawLine(drawLinePoints[0],drawLinePoints[1],drawLinePoints[2],drawLinePoints[3],paintWhite)
+                        invalidate()
                     }
                 }
 
@@ -698,7 +694,6 @@ class PatternView @JvmOverloads constructor(
                 output.clear()
                 Log.d("asdert",""+realoutput)
 
-                mCanvas?.drawPath(mPath,paintWhite)
 
                 currentX=0f
                 currentY=0f
@@ -711,6 +706,7 @@ class PatternView @JvmOverloads constructor(
                 seven=true
                 eight=true
                 nine=true
+                last=0
             }
         }
         return true
